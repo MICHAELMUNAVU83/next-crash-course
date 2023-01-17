@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { server } from "../../../config";
 
 const article = ({ article }) => {
   console.log(article);
@@ -13,9 +14,7 @@ const article = ({ article }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const res = await fetch(
-    `http://jsonplaceholder.typicode.com/posts/${context.params.id}`
-  );
+  const res = await fetch(`${server}/api/articles/${context.params.id}`);
   const article = await res.json();
 
   return {
@@ -24,5 +23,18 @@ export const getServerSideProps = async (context) => {
     },
   };
 };
+
+// export const getServerSideProps = async (context) => {
+//   const res = await fetch(
+//     `http://jsonplaceholder.typicode.com/posts/${context.params.id}`
+//   );
+//   const article = await res.json();
+
+//   return {
+//     props: {
+//       article,
+//     },
+//   };
+// };
 
 export default article;
